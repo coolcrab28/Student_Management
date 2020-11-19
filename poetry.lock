@@ -1,0 +1,36 @@
+[[package]]
+category = "main"
+description = "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format"
+name = "prettytable"
+optional = false
+python-versions = ">=3.6"
+version = "2.0.0"
+
+[package.dependencies]
+setuptools = "*"
+wcwidth = "*"
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
+category = "main"
+description = "Measures the displayed width of unicode strings in a terminal"
+name = "wcwidth"
+optional = false
+python-versions = "*"
+version = "0.2.5"
+
+[metadata]
+content-hash = "4d75ce052c3b5c87193a7bcd9c03cff57b2611e62520a27c654a549e83e374f0"
+python-versions = "^3.8"
+
+[metadata.files]
+prettytable = [
+    {file = "prettytable-2.0.0-py3-none-any.whl", hash = "sha256:5dc7fcaca227f48deacd86958ae9d7b8c31a186fcb354bbb066763f20adf3eb9"},
+    {file = "prettytable-2.0.0.tar.gz", hash = "sha256:e37acd91976fe6119172771520e58d1742c8479703489321dc1d9c85e7259922"},
+]
+wcwidth = [
+    {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
+    {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
+]
