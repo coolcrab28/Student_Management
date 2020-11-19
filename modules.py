@@ -23,5 +23,19 @@ def show():
 def clear():
     os.system('cls')
 
-def inp():
-    pass
+def inp(name,age):
+    try:
+        c.execute(f"""
+    INSERT INTO students(name,age) VALUES('{name}', {age});
+    """)
+    except sqlite3.Error as er:
+        print('SQLite error: %s' % (' '.join(er.args)))
+
+
+    conn.commit()
+
+    a = c.execute("""
+    SELECT * FROM students;
+    """)
+    mytable = from_db_cursor(a)
+    print(mytable)

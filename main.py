@@ -7,6 +7,7 @@ while True:
         clear()
         show()
     elif choice == 0:
+        c.close()
         clear()
         break
         exit()
@@ -14,5 +15,5 @@ while True:
         clear()
         name = input("Enter name: ")
         age = int(input("Enter age: "))
-        os.system(f'python input.py "{name}" {age}')
+        inp(name,age)
 
