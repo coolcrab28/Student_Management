@@ -22,3 +22,6 @@ def show():
 
 def clear():
     os.system('cls')
+
+def inp():
+    pass
