@@ -1,9 +1,12 @@
 import sqlite3
+import re 
 from prettytable import from_db_cursor
 import os
 
 conn = sqlite3.connect('students.db')
 c = conn.cursor()
+
+regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
 msg = """
 Choose An Option:
@@ -14,6 +17,7 @@ Choose An Option:
 0 : Exit
 """
 def show():
+    c
     a = c.execute("""
     SELECT * FROM students;
     """)
@@ -23,10 +27,11 @@ def show():
 def clear():
     os.system('cls')
 
-def inp(name,age):
+def inp(name,age,email):
+    c
     try:
         c.execute(f"""
-        INSERT INTO students(name,age) VALUES('{name}', {age});
+        INSERT INTO students(name,age,email) VALUES('{name}', {age}, '{email}');
         """)
     except sqlite3.Error as er:
         print('SQLite error: %s' % (' '.join(er.args)))
@@ -38,5 +43,16 @@ def inp(name,age):
         """)
         mytable = from_db_cursor(a)
         print(mytable)
+        c.close()
     else:
-        print("No changes were made.")
+        print("No changes were made..")
+        c.close()
+
+
+def check(email):  
+    if(re.search(regex,email)):  
+        return True
+          
+    else:  
+        return False
+      
