@@ -30,14 +30,14 @@ def clear():
     os.system('cls')
 
 def inp(name,age,email):
-    c
+    c = conn.cursor()
+    n = input("Enter YES to confirm : ")
     try:
         c.execute(f"""
         INSERT INTO students(name,age,email) VALUES('{name}', {age}, '{email}');
         """)
     except sqlite3.Error as er:
         print('SQLite error: %s' % (' '.join(er.args)))
-    n = input("Enter YES to confirm : ")
     if n == "YES" or n == "yes":
         conn.commit()
         a = c.execute("""
@@ -48,8 +48,8 @@ def inp(name,age,email):
         print(mytable)
         c.close()
     else:
+        conn.rollback()
         print("No changes were made..")
-        c.close()
 
 
 def check(email):  
@@ -71,7 +71,7 @@ def destroy():
         show()
     else:
         print("Abort!")
-        c.close()
+        
 def create_table():
     c = conn.cursor()
     clear()
