@@ -20,6 +20,7 @@ Choose An Option:
 
 999999 : Clear all data
 0 : Exit
+
 """
 def show():
     c = conn.cursor()
@@ -150,3 +151,9 @@ def main():
         elif choice == 999999:
             clear()
             destroy()
+
+def start():
+    clear()
+    main()
+
+# start()

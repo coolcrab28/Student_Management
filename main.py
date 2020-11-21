@@ -1,3 +1,2 @@
 from modules import *
-clear()
-main()
+start()
