@@ -2,6 +2,9 @@ import sqlite3
 import re 
 from prettytable import from_db_cursor
 import os
+import time
+import uuid
+
 
 conn = sqlite3.connect('students.db')
 c = conn.cursor()
@@ -31,26 +34,26 @@ def clear():
 
 def inp(name,age,email):
     c = conn.cursor()
-    n = input("Enter YES to confirm : ")
     try:
+        i = (str(uuid.uuid4())[0:8])
         c.execute(f"""
-        INSERT INTO students(name,age,email) VALUES('{name}', {age}, '{email}');
+        INSERT INTO students(id,name,age,email) VALUES('{i}','{name}', {age}, '{email}');
         """)
+        n = input("Enter YES to confirm : ")
+        if n.lower() == 'yes':
+            conn.commit()
+            clear()
+            show()
+            c.close()
+        else:
+            conn.rollback()
+            print("No changes were made..")
+
     except sqlite3.Error as er:
         print('SQLite error: %s' % (' '.join(er.args)))
-    if n == "YES" or n == "yes":
-        conn.commit()
-        a = c.execute("""
-        SELECT * FROM students;
-        """)
-        mytable = from_db_cursor(a)
-        clear()
-        print(mytable)
-        c.close()
-    else:
-        conn.rollback()
-        print("No changes were made..")
-
+        show()
+    
+    
 
 def check(email):  
     if(re.search(regex,email)):  
@@ -76,13 +79,45 @@ def create_table():
     c = conn.cursor()
     clear()
     st = """
-    CREATE TABLE students(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    CREATE TABLE students(id VARCHAR(20) PRIMARY KEY NOT NULL,
     name VARCHAR(30) NOT NULL,
     age INTEGER NOT NULL,
     email VARCHAR(40) NOT NULL
     )
     """
     c.execute(st)
+
+
+def remove():
+    clear()
+    show()
+    i = (input("Enter ID to remove: "))
+    c.execute(f"""SELECT name FROM students WHERE id = '{i}' """)
+    rows = c.fetchall()
+    name = rows[0][0]
+    clear()
+    print(f"""Are you sure you want to remove '{name}' from the table? (y/N)""")
+    ch = input()
+    if not(ch):
+        print("No changes were made.")
+    elif ch.lower() == 'y' or ch.lower() == 'yes':
+        print("OK...."); 
+        ct = f"""DELETE FROM students WHERE id ='{i}' """
+        c.execute(ct)
+        conn.commit()
+        print('Done!')
+        time.sleep(1)
+        clear()
+        show()
+
+def update():
+    clear()
+    show()
+    i = (input("Enter ID of Student to update: "))
+    c.execute(f"""SELECT name FROM students WHERE id = {i} """)
+    rows = c.fetchall()
+    name = rows[0][0]
+    print(name)
 
 def main():
     while True:
@@ -108,9 +143,10 @@ def main():
                 print("Invalid email format!")
         elif choice == 3:
             clear()
+            remove()
         elif choice == 4:
             clear()
+            update()
         elif choice == 999999:
             clear()
             destroy()
-        
