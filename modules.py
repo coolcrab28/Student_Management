@@ -37,11 +37,11 @@ def inp(name,age,email):
     c = conn.cursor()
     try:
         i = (str(uuid.uuid4())[0:8])
-        c.execute(f"""
-        INSERT INTO students(id,name,age,email) VALUES('{i}','{name}', {age}, '{email}');
-        """)
         n = input("Enter YES to confirm : ")
-        if n.lower() == 'yes':
+        if n.lower() == 'yes' or n.lower == 'y':
+            c.execute(f"""
+            INSERT INTO students(id,name,age,email) VALUES('{i}','{name}', {age}, '{email}');
+            """)
             conn.commit()
             clear()
             show()
