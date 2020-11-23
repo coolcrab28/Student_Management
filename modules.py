@@ -8,6 +8,14 @@ import uuid
 
 conn = sqlite3.connect('students.db')
 c = conn.cursor()
+cr = """
+CREATE TABLE IF NOT EXISTS students(id VARCHAR(20) PRIMARY KEY NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    age INTEGER NOT NULL,
+    email VARCHAR(40) NOT NULL
+    )
+"""
+c.execute(cr)
 
 regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
