@@ -4,7 +4,7 @@ from prettytable import from_db_cursor
 import os
 import time
 import uuid
-#123
+
 
 conn = sqlite3.connect('students.db')
 c = conn.cursor()
@@ -39,7 +39,10 @@ def show():
     print(mytable)
 
 def clear():
-    os.system('cls')
+    try:
+        os.system('cls')
+    except:
+        os.system('clear')
 
 def inp(name,age,email):
     c = conn.cursor()
@@ -164,4 +167,4 @@ def start():
     clear()
     main()
     
-# start()
+start()
