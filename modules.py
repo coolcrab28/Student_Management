@@ -166,5 +166,3 @@ def main():
 def start():
     clear()
     main()
-    
-start()
