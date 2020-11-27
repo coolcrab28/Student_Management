@@ -126,11 +126,26 @@ def update():
     clear()
     show()
     i = (input("Enter ID of Student to update: "))
-    c.execute(f"""SELECT name FROM students WHERE id = {i} """)
+    c.execute(f"""SELECT name FROM students WHERE id = '{i}' """)
     rows = c.fetchall()
     name = rows[0][0]
-    print(name)
-
+    print('Name: ', name)
+    print("""
+    Choose what to update: 
+    1 : Name
+    2 : Age
+    3 : Email-id
+    """)
+    a = int(input("Choice: "))
+    if a==1:
+        new = input("Enter new name: ")
+        st = str(f"CAUTION! This will change the name from {rows[0][0]} to {new} \n\nContinue(y/N)")
+        i = input(st)
+        if not(i):
+            print("Abort!")
+            time.sleep(2)
+            clear()
+            show()
 def main():
     while True:
         print(msg)
