@@ -31,6 +31,7 @@ Choose An Option:
 
 """
 def show():
+    clear()
     c = conn.cursor()
     a = c.execute("""
     SELECT * FROM students;
@@ -140,12 +141,59 @@ def update():
     if a==1:
         new = input("Enter new name: ")
         st = str(f"CAUTION! This will change the name from {rows[0][0]} to {new} \n\nContinue(y/N)")
-        i = input(st)
-        if not(i):
+        ch = input(st)
+        
+        if ch.lower() == 'y' or ch.lower() == 'yes':
+            st = f"""UPDATE students 
+            SET name = '{new}' WHERE id = '{i}'
+            """
+            c.execute(st)
+            conn.commit()
+            show()
+        else:
             print("Abort!")
             time.sleep(2)
             clear()
             show()
+    elif a == 2:
+        c.execute(f"""SELECT name FROM students WHERE id = '{i}' """)
+        rows = c.fetchall()
+        age = rows[0][0]
+        new = int(input("Enter new age: "))
+        st = str(f"CAUTION! This will change the name from {age} to {new} \n\nContinue(y/N)")
+        ch = input(st)
+        if ch.lower() == 'y' or ch.lower() == 'yes':
+            st = f"""UPDATE students 
+            SET age = {new} WHERE id = '{i}'
+            """
+            c.execute(st)
+            conn.commit()
+            show()
+        else:
+            print("Abort!")
+            time.sleep(2)
+            clear()
+            show()
+    elif a == 3:
+        c.execute(f"""SELECT name FROM students WHERE id = '{i}' """)
+        rows = c.fetchall()
+        email = rows[0][0]
+        new = input("Enter new email: ")
+        if (new):
+            st = str(f"CAUTION! This will change the email from {email} to {new} \n\nContinue(y/N)")
+            ch = input(st)
+            if ch.lower() == 'y' or ch.lower() == 'yes':
+                st = f"""UPDATE students 
+                SET email = '{new}' WHERE id = '{i}'
+                """
+                c.execute(st)
+                conn.commit()
+                show()
+            else:
+                print("Abort!")
+                time.sleep(2)
+                clear()
+                show()
 def main():
     while True:
         print(msg)
